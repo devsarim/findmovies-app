@@ -8,16 +8,57 @@
     <title>Find Movies</title>
   </head>
   <body>
-    <form action="">
-      <input
-        type="search"
-        id="search-bar"
-        placeholder="Search for a movie..."
-      />
-      <input type="submit" id="search-btn" value="Search" />
-    </form>
+    <header class="bg-dark">
+      <div class="container">
+        <h1 class="logo" style="color: white; font-size: 3.5rem">
+          Find<span class="text-secondary">Movies</span>
+        </h1>
+        <form action="" id="search-form">
+          <div id="search-bar-container">
+            <input id="search-bar" type="text" placeholder="Search..." />
+            <i class="fas fa-search" id="search-icon"></i>
+          </div>
+          <input type="submit" hidden />
+        </form>
+      </div>
+    </header>
 
-    <div id="movies"></div>
+    <main class="bg-accent">
+      <div class="container">
+        <h3 id="subheading">Trending Today</h3>
+        <div class="results-grid"></div>
+      </div>
+    </main>
+
+    <section class="movie-popout">
+      <img src="./poster.jpg" alt="movie poster" />
+      <div class="movie-popout-right">
+        <div class="movie-popout-header">
+          <h4 class="movie-title">
+            Spider-Man: No Way Home <span class="text-secondary">2021</span>
+          </h4>
+          <p class="text-secondary movie-rating" title="1234 votes">
+            <i class="fas fa-star" style="color: #d3c43a"></i>&nbsp;10
+          </p>
+        </div>
+        <p class="movie-overview">
+          Peter Parker is unmasked and no longer able to separate his normal
+          life from the high-stakes of being a super-hero. When he asks for help
+          from Doctor Strange the stakes become even more dangerous, forcing him
+          to discover what it truly means to be Spider-Man.
+        </p>
+        <ul class="movie-genres">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Science Fiction</a></li>
+          <li><a href="#">Adventure</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <script
+      src="https://kit.fontawesome.com/ec986fecb8.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="main.js"></script>
   </body>
 </html>
