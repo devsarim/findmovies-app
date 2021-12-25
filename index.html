@@ -8,10 +8,10 @@
     <title>Find Movies</title>
   </head>
   <body>
-    <header class="bg-dark">
+    <header class="bg-primary">
       <div class="container">
         <h1 class="logo" style="color: white; font-size: 3.5rem">
-          Find<span class="text-secondary">Movies</span>
+          Find<span class="text-dark">Movies</span>
         </h1>
         <form action="" id="search-form">
           <div id="search-bar-container">
@@ -23,42 +23,113 @@
       </div>
     </header>
 
-    <main class="bg-accent">
+    <main class="bg-dark">
       <div class="container">
-        <h3 id="subheading">Trending Today</h3>
-        <div class="results-grid"></div>
+        <div class="subheading">Trending Movies (Today)</div>
+
+        <div class="pagination-component">
+          <div class="pages-container">
+            <div class="page current results-grid">
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+            </div>
+            <div class="page current results-grid">
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+            </div>
+            <div class="page current results-grid">
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+              <div class="result-card">
+                <img class="result-poster" src="./poster.jpg" alt="" />
+                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
+              </div>
+            </div>
+          </div>
+          <div class="pagination-controls">
+            <button class="prev-page text-dark" aria-label="previous page">
+              &lt;
+            </button>
+            <p class="page-tracker text-underline text-white">0</p>
+            <button class="next-page text-dark" aria-label="next page">
+              &gt;
+            </button>
+          </div>
+        </div>
       </div>
     </main>
 
-    <section class="movie-popout">
-      <img src="./poster.jpg" alt="movie poster" />
-      <div class="movie-popout-right">
-        <div class="movie-popout-header">
-          <h4 class="movie-title">
-            Spider-Man: No Way Home <span class="text-secondary">2021</span>
-          </h4>
-          <p class="text-secondary movie-rating" title="1234 votes">
-            <i class="fas fa-star" style="color: #d3c43a"></i>&nbsp;10
+    <div class="result-popout-container">
+      <div class="overlay"></div>
+      <div class="result-popout bg-primary">
+        <img class="result-poster" src="./poster.jpg" alt="" />
+        <section class="result-info">
+          <h3 class="text-white">
+            Spider-Man: No Way Home <span class="text-dark">2021</span>
+          </h3>
+          <p class="text-dark">
+            8.1/10&nbsp;<i class="fas fa-star text-yellow"></i>
           </p>
-        </div>
-        <p class="movie-overview">
-          Peter Parker is unmasked and no longer able to separate his normal
-          life from the high-stakes of being a super-hero. When he asks for help
-          from Doctor Strange the stakes become even more dangerous, forcing him
-          to discover what it truly means to be Spider-Man.
-        </p>
-        <ul class="movie-genres">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Science Fiction</a></li>
-          <li><a href="#">Adventure</a></li>
-        </ul>
+
+          <p class="result-overview text-white">
+            Peter Parker is unmasked and no longer able to separate his normal
+            life from the high-stakes of being a super-hero. When he asks for
+            help from Doctor Strange the stakes become even more dangerous,
+            forcing him to discover what it truly means to be Spider-Man.
+          </p>
+
+          <ul class="genres">
+            <li><a href="#" class="genre">Action</a></li>
+            <li><a href="#" class="genre">Science Fiction</a></li>
+            <li><a href="#" class="genre">Adventure</a></li>
+          </ul>
+        </section>
       </div>
-    </section>
+    </div>
 
     <script
       src="https://kit.fontawesome.com/ec986fecb8.js"
       crossorigin="anonymous"
     ></script>
+    <script src="pagination.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
