@@ -41,12 +41,10 @@ window.addEventListener("load", () => {
       });
 
       this.root.addEventListener("swiped-left", () => {
-        console.log("swiped left");
         this.nextPage();
       });
 
       this.root.addEventListener("swiped-right", () => {
-        console.log("swiped left");
         this.previousPage();
       });
 
@@ -77,7 +75,6 @@ window.addEventListener("load", () => {
 
     nextPage() {
       if (this.pageWrapper.children.length === 0) {
-        console.log("Not enough items");
         return;
       }
 
@@ -98,7 +95,6 @@ window.addEventListener("load", () => {
 
     previousPage() {
       if (this.pageWrapper.children.length === 0) {
-        console.log("Not enough items");
         return;
       }
 
@@ -134,7 +130,6 @@ window.addEventListener("load", () => {
 
     registerHeightObserver(node) {
       const resizeObserver = new ResizeObserver((entries) => {
-        console.log(entries[0].target.clientHeight);
         this.updateHeight();
       });
 
@@ -319,7 +314,6 @@ window.addEventListener("load", () => {
 
   document.querySelectorAll(".pagination-component").forEach((component) => {
     new Pagination(component);
-    console.log("Component registered");
   });
 
   renderTrendingMovies();
@@ -328,8 +322,6 @@ window.addEventListener("load", () => {
 
   document.querySelector("[type=submit]").addEventListener("click", (e) => {
     e.preventDefault();
-
     renderSearchResults(searchBar.value);
   });
-  //https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
 });
