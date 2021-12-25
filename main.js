@@ -1,106 +1,178 @@
-const registerPagination = () => {
-  document.querySelectorAll(".pages-container").forEach((pagesContainer) => {
-    let rootContainer = pagesContainer.parentElement;
-    let pageControls = rootContainer.children[1];
-
-    let prevPage = pageControls.children[0];
-    let currentPageIndicator = pageControls.children[1];
-    let nextPage = pageControls.children[2];
-
-    let pages = pagesContainer.children;
-    let currentPage = pages[0];
-    let currentPageNum = 1;
-
-    let focused = false;
-
-    function goToNextPage() {
-      if (!currentPage) {
-        return;
-      }
-
-      if (currentPage.nextElementSibling) {
-        currentPage.classList.remove("current");
-        currentPage = currentPage.nextElementSibling;
-        currentPage.classList.add("current");
-
-        currentPageNum++;
-        currentPageIndicator.textContent = currentPageNum;
-      } else {
-        currentPage.classList.remove("current");
-        currentPage = pages[0];
-        currentPage.classList.add("current");
-
-        currentPageNum = 1;
-        currentPageIndicator.textContent = currentPageNum;
-      }
-
-      pagesContainer.style.height = currentPage.clientHeight + "px";
-    }
-
-    function goToPrevPage() {
-      if (!currentPage) {
-        return;
-      }
-
-      if (currentPage.previousElementSibling) {
-        currentPage.classList.remove("current");
-        currentPage = currentPage.previousElementSibling;
-        currentPage.classList.add("current");
-
-        currentPageNum--;
-        currentPageIndicator.textContent = currentPageNum;
-      } else {
-        currentPage.classList.remove("current");
-        currentPage = pages[pages.length - 1];
-        currentPage.classList.add("current");
-
-        currentPageNum = pages.length;
-        currentPageIndicator.textContent = currentPageNum;
-      }
-
-      pagesContainer.style.height = currentPage.clientHeight + "px";
-    }
-
-    nextPage.addEventListener("click", goToNextPage);
-    prevPage.addEventListener("click", goToPrevPage);
-
-    rootContainer.addEventListener("mouseover", () => {
-      focused = true;
-    });
-
-    rootContainer.addEventListener("mouseout", () => {
-      focused = false;
-    });
-
-    window.addEventListener("keydown", (e) => {
-      if (focused) {
-        if (e.key === "ArrowRight") {
-          goToNextPage();
-        } else if (e.key === "ArrowLeft") {
-          goToPrevPage();
-        }
-      }
-    });
-
-    // not really necessary
-    window.addEventListener("resize", () => {
-      if (!currentPage) {
-        return;
-      }
-
-      pagesContainer.style.height = currentPage.clientHeight + "px";
-    });
-
-    if (currentPage) {
-      console.log("set initial " + currentPage.clientHeight);
-      pagesContainer.style.height = currentPage.clientHeight + "px";
-      currentPageIndicator.textContent = 1;
-    }
-  });
-};
-
 window.addEventListener("load", () => {
   console.info("DOM Loaded");
+  class Pagination {
+    constructor(rootElement) {
+      this.root = rootElement;
+      this.pageWrapper = this.root.querySelector(".pages-container");
+      this.previousPageBtn = this.root.querySelector(".prev-page");
+      this.nextPageBtn = this.root.querySelector(".next-page");
+      this.currentPageIndicator = this.root.querySelector(".page-tracker");
+
+      this.currentPage = this.pageWrapper.querySelector(".current");
+      this.pageIndex = 1;
+      this.focused = false;
+
+      this.root.addEventListener("mouseover", () => {
+        this.focused = true;
+      });
+
+      this.root.addEventListener("mouseout", () => {
+        this.focused = false;
+      });
+
+      this.previousPageBtn.addEventListener("click", () => {
+        this.previousPage();
+      });
+
+      this.nextPageBtn.addEventListener("click", () => {
+        this.nextPage();
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (!this.focused) {
+          return;
+        }
+
+        if (e.key === "ArrowRight") {
+          this.nextPage();
+        } else if (e.key === "ArrowLeft") {
+          this.previousPage();
+        }
+      });
+
+      this.root.addEventListener("swiped-left", () => {
+        console.log("swiped left");
+        this.nextPage();
+      });
+
+      this.root.addEventListener("swiped-right", () => {
+        console.log("swiped left");
+        this.previousPage();
+      });
+
+      this.updateIndicator();
+      this.registerChildObserver();
+    }
+
+    updateIndicator() {
+      this.currentPageIndicator.textContent = this.pageIndex;
+    }
+
+    resetIndex() {
+      let pages = this.pageWrapper.children;
+
+      for (let index = 0; index < pages.length; index++) {
+        let page = pages[index];
+        if (index === 0) {
+          this.currentPage = page;
+          this.currentPage.classList.add("current");
+        } else {
+          page.classList.remove("current");
+        }
+      }
+
+      this.pageIndex = 1;
+      this.updateIndicator();
+    }
+
+    nextPage() {
+      if (this.pageWrapper.children.length === 0) {
+        console.log("Not enough items");
+        return;
+      }
+
+      this.currentPage.classList.remove("current");
+
+      if (this.currentPage.nextElementSibling) {
+        this.currentPage = this.currentPage.nextElementSibling;
+        this.pageIndex++;
+      } else {
+        this.currentPage = this.pageWrapper.children[0];
+        this.pageIndex = 1;
+      }
+
+      this.currentPage.classList.add("current");
+      this.pageWrapper.style.height = this.currentPage.clientHeight + "px";
+      this.updateIndicator();
+    }
+
+    previousPage() {
+      if (this.pageWrapper.children.length === 0) {
+        console.log("Not enough items");
+        return;
+      }
+
+      this.currentPage.classList.remove("current");
+
+      if (this.currentPage.previousElementSibling) {
+        this.currentPage = this.currentPage.previousElementSibling;
+        this.pageIndex--;
+      } else {
+        this.currentPage =
+          this.pageWrapper.children[this.pageWrapper.children.length - 1];
+        this.pageIndex = this.pageWrapper.children.length;
+      }
+
+      this.currentPage.classList.add("current");
+      this.pageWrapper.style.height = this.currentPage.clientHeight + "px";
+      this.updateIndicator();
+    }
+
+    updateHeight() {
+      let largestHeight = 0;
+      let pages = this.pageWrapper.children;
+
+      for (let index = 0; index < pages.length; index++) {
+        const page = pages[index];
+        if (page.clientHeight >= largestHeight) {
+          largestHeight = page.clientHeight;
+        }
+      }
+
+      this.pageWrapper.style.height = largestHeight + "px";
+    }
+
+    registerHeightObserver(node) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        console.log(entries[0].target.clientHeight);
+        this.updateHeight();
+      });
+
+      resizeObserver.observe(node);
+    }
+
+    registerChildObserver() {
+      let pages = this.pageWrapper.children;
+
+      for (let index = 0; index < pages.length; index++) {
+        const page = pages[index];
+        this.registerHeightObserver(page);
+      }
+
+      const callback = (mutationsList) => {
+        for (let index = 0; index < mutationsList.length; index++) {
+          const mutationRecord = mutationsList[index];
+          if (mutationRecord.type === "childList") {
+            if (this.pageWrapper.children.length > 0) {
+              this.registerHeightObserver(
+                this.pageWrapper.children[this.pageWrapper.children.length - 1]
+              );
+            }
+            this.resetIndex();
+            return;
+          }
+        }
+      };
+
+      let observer = new MutationObserver(callback);
+
+      observer.observe(this.pageWrapper, {
+        characterData: false,
+        childList: true,
+        attributes: false,
+      });
+    }
+  }
 
   const GENRES = [
     { id: 28, name: "Action" },
@@ -172,8 +244,6 @@ window.addEventListener("load", () => {
             `;
             });
           });
-
-          registerPagination();
         });
       }
     );
@@ -208,8 +278,6 @@ window.addEventListener("load", () => {
             `;
             });
           });
-
-          registerPagination();
         });
       }
     );
@@ -244,17 +312,18 @@ window.addEventListener("load", () => {
             `;
             });
           });
-
-          registerPagination();
         });
       }
     );
   };
 
+  document.querySelectorAll(".pagination-component").forEach((component) => {
+    new Pagination(component);
+    console.log("Component registered");
+  });
+
   renderTrendingMovies();
   renderTrendingShows();
-  registerPagination();
-
   const searchBar = document.querySelector("#search-bar");
 
   document.querySelector("[type=submit]").addEventListener("click", (e) => {

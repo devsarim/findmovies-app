@@ -77,21 +77,17 @@ a {
 
 .pages-container {
   position: relative;
-  /* min-height: 300px; */
+  width: 100%;
+  pointer-events: none;
 }
 
 .page {
   position: absolute;
-  width: 100%;
-  /* transform: scaleY(0); */
-  /* transition: transform 150ms ease-in-out; */
   opacity: 0;
   transition: opacity 150ms ease-in-out;
-  min-height: 415px;
 }
 
 .page.current {
-  /* transform: scaleY(1); */
   opacity: 1;
 }
 
