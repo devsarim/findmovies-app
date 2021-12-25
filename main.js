@@ -204,7 +204,7 @@ window.addEventListener("load", () => {
     "#search-results-section"
   );
 
-  const renderSearchResults = (query) => {
+  const searchMovies = (query) => {
     if (query === "") {
       searchResultsSection.style.display = "none";
       return;
@@ -234,6 +234,46 @@ window.addEventListener("load", () => {
             <img class="result-poster" src="https://image.tmdb.org/t/p/original${item.poster_path}" alt="Movie Poster" />
             <h4 class="result-title text-white">
             ${item.title}
+            </h4>
+            </div>
+            `;
+            });
+          });
+        });
+      }
+    );
+  };
+
+  const searchShows = (query) => {
+    if (query === "") {
+      searchResultsSection.style.display = "none";
+      return;
+    }
+
+    searchResultsSection.style.display = "initial";
+    let pagesContainer = document.querySelector("#search-results");
+    pagesContainer.innerHTML = "";
+
+    fetch(`https://findmovies-proxy.glitch.me/api/shows?query=${query}`).then(
+      (res) => {
+        res.json().then((data) => {
+          let groups = sliceIntoChunks(data.results, 4);
+
+          groups.forEach((group, index) => {
+            pagesContainer.innerHTML += `
+            <div class="page results-grid ${index === 0 ? "current" : ""}">
+  
+            </div>
+  
+          `;
+
+            let curPage = pagesContainer.children[index];
+            group.forEach((item) => {
+              curPage.innerHTML += `
+            <div class="result-card">
+            <img class="result-poster" src="https://image.tmdb.org/t/p/original${item.poster_path}" alt="Movie Poster" />
+            <h4 class="result-title text-white">
+            ${item.name}
             </h4>
             </div>
             `;
@@ -318,10 +358,19 @@ window.addEventListener("load", () => {
 
   renderTrendingMovies();
   renderTrendingShows();
+
+  // searching
   const searchBar = document.querySelector("#search-bar");
 
   document.querySelector("[type=submit]").addEventListener("click", (e) => {
     e.preventDefault();
-    renderSearchResults(searchBar.value);
+
+    let query = searchBar.value;
+
+    if (query.substring(0, 2) === "/s") {
+      searchShows(query.substring(3));
+    } else {
+      searchMovies(query);
+    }
   });
 });
