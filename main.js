@@ -231,9 +231,13 @@ window.addEventListener("load", () => {
             group.forEach((item) => {
               curPage.innerHTML += `
             <div class="result-card">
-            <img class="result-poster" src="https://image.tmdb.org/t/p/original${item.poster_path}" alt="Movie Poster" />
+            <img class="result-poster" src="https://image.tmdb.org/t/p/original${
+              item.poster_path
+            }" alt="Movie Poster" />
             <h4 class="result-title text-white">
-            ${item.title}
+            ${item.title}&nbsp;<span class="text-primary text-underline">${
+                item.first_air_date.split("-")[0]
+              }</span>
             </h4>
             </div>
             `;
@@ -271,9 +275,13 @@ window.addEventListener("load", () => {
             group.forEach((item) => {
               curPage.innerHTML += `
             <div class="result-card">
-            <img class="result-poster" src="https://image.tmdb.org/t/p/original${item.poster_path}" alt="Movie Poster" />
+            <img class="result-poster" src="https://image.tmdb.org/t/p/original${
+              item.poster_path
+            }" alt="Movie Poster" />
             <h4 class="result-title text-white">
-            ${item.name}
+            ${item.name}&nbsp;<span class="text-primary text-underline">${
+                item.first_air_date.split("-")[0]
+              }</span>
             </h4>
             </div>
             `;
@@ -305,11 +313,14 @@ window.addEventListener("load", () => {
             group.forEach((item) => {
               curPage.innerHTML += `
             <div class="result-card">
-            <img class="result-poster" src="https://image.tmdb.org/t/p/original${item.poster_path}" alt="Movie Poster" />
+            <img class="result-poster" src="https://image.tmdb.org/t/p/original${
+              item.poster_path
+            }" alt="Movie Poster" />
             <h4 class="result-title text-white">
-            ${item.title}
+            ${item.title}&nbsp;<span class="text-primary text-underline">${
+                item.release_date.split("-")[0]
+              }</span>
             </h4>
-            </div>
             `;
             });
           });
@@ -339,9 +350,13 @@ window.addEventListener("load", () => {
             group.forEach((item) => {
               curPage.innerHTML += `
             <div class="result-card">
-            <img class="result-poster" src="https://image.tmdb.org/t/p/original${item.poster_path}" alt="Movie Poster" />
+            <img class="result-poster" src="https://image.tmdb.org/t/p/original${
+              item.poster_path
+            }" alt="Movie Poster" />
             <h4 class="result-title text-white">
-            ${item.name}
+            ${item.name}&nbsp;<span class="text-primary text-underline">${
+                item.first_air_date.split("-")[0]
+              }</span>
             </h4>
             </div>
             `;
