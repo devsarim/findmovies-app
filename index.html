@@ -10,7 +10,7 @@
   <body>
     <header class="bg-primary">
       <div class="container">
-        <h1 class="logo" style="color: white; font-size: 3.5rem">
+        <h1 class="logo text-white">
           Find<span class="text-dark">Movies</span>
         </h1>
         <form action="" id="search-form">
@@ -24,74 +24,54 @@
     </header>
 
     <main class="bg-dark">
-      <div class="container">
-        <div class="subheading">Trending Movies (Today)</div>
+      <div class="container" id="results-container">
+        <div class="results-section" id="search-results-section">
+          <div class="subheading">Search results</div>
 
-        <div class="pagination-component">
-          <div class="pages-container">
-            <div class="page current results-grid">
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-            </div>
-            <div class="page current results-grid">
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-            </div>
-            <div class="page current results-grid">
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
-              <div class="result-card">
-                <img class="result-poster" src="./poster.jpg" alt="" />
-                <h4 class="result-title text-white">Spider-Man: No Way Home</h4>
-              </div>
+          <div class="pagination-component">
+            <div class="pages-container" id="search-results"></div>
+            <div class="pagination-controls">
+              <button class="prev-page text-dark" aria-label="previous page">
+                &lt;
+              </button>
+              <p class="page-tracker text-underline text-white">0</p>
+              <button class="next-page text-dark" aria-label="next page">
+                &gt;
+              </button>
             </div>
           </div>
-          <div class="pagination-controls">
-            <button class="prev-page text-dark" aria-label="previous page">
-              &lt;
-            </button>
-            <p class="page-tracker text-underline text-white">0</p>
-            <button class="next-page text-dark" aria-label="next page">
-              &gt;
-            </button>
+        </div>
+
+        <div class="results-section">
+          <div class="subheading">Trending Movies (Today)</div>
+
+          <div class="pagination-component">
+            <div class="pages-container" id="trending-movies"></div>
+            <div class="pagination-controls">
+              <button class="prev-page text-dark" aria-label="previous page">
+                &lt;
+              </button>
+              <p class="page-tracker text-underline text-white">0</p>
+              <button class="next-page text-dark" aria-label="next page">
+                &gt;
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="results-section">
+          <div class="subheading">Trending Shows (Today)</div>
+
+          <div class="pagination-component">
+            <div class="pages-container" id="trending-shows"></div>
+            <div class="pagination-controls">
+              <button class="prev-page text-dark" aria-label="previous page">
+                &lt;
+              </button>
+              <p class="page-tracker text-underline text-white">0</p>
+              <button class="next-page text-dark" aria-label="next page">
+                &gt;
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -128,6 +108,7 @@
     <script
       src="https://kit.fontawesome.com/ec986fecb8.js"
       crossorigin="anonymous"
+      defer
     ></script>
     <script src="pagination.js"></script>
     <script src="main.js"></script>
