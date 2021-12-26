@@ -73,6 +73,13 @@ a {
   transform: translateY(-200%);
 }
 
+select {
+  padding: 0 1em;
+  background-color: white;
+  border: none;
+  border-radius: 0.25rem;
+}
+
 /* pagination */
 .pagination-component {
   display: grid;
@@ -178,6 +185,8 @@ main .container {
   font-size: 2rem;
   font-weight: lighter;
   margin-bottom: 1em;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* results */

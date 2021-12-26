@@ -323,60 +323,78 @@ window.addEventListener("load", () => {
     );
   };
 
-  const renderTrendingMovies = () => {
+  const renderTrendingMovies = (timeline) => {
     let pagesContainer = document.querySelector("#trending-movies");
     pagesContainer.innerHTML = "";
 
-    fetch("https://findmovies-proxy.glitch.me/api/trendingmovies/today").then(
-      (res) => {
-        res.json().then((data) => {
-          let groups = sliceIntoChunks(data.results, 4);
+    fetch(
+      `https://findmovies-proxy.glitch.me/api/trendingmovies/${timeline}`
+    ).then((res) => {
+      res.json().then((data) => {
+        let groups = sliceIntoChunks(data.results, 4);
 
-          groups.forEach((group, index) => {
-            pagesContainer.innerHTML += `<div class="page results-grid ${
-              index === 0 ? "current" : ""
-            }"></div>`;
+        groups.forEach((group, index) => {
+          pagesContainer.innerHTML += `<div class="page results-grid ${
+            index === 0 ? "current" : ""
+          }"></div>`;
 
-            let curPage = pagesContainer.children[index];
-            group.forEach((item) => {
-              curPage.innerHTML += renderMovie(item);
-            });
+          let curPage = pagesContainer.children[index];
+          group.forEach((item) => {
+            curPage.innerHTML += renderMovie(item);
           });
         });
-      }
-    );
+      });
+    });
   };
 
-  const renderTrendingShows = () => {
+  const renderTrendingShows = (timeline) => {
     let pagesContainer = document.querySelector("#trending-shows");
     pagesContainer.innerHTML = "";
 
-    fetch("https://findmovies-proxy.glitch.me/api/trendingshows/today").then(
-      (res) => {
-        res.json().then((data) => {
-          let groups = sliceIntoChunks(data.results, 4);
+    fetch(
+      `https://findmovies-proxy.glitch.me/api/trendingshows/${timeline}`
+    ).then((res) => {
+      res.json().then((data) => {
+        let groups = sliceIntoChunks(data.results, 4);
 
-          groups.forEach((group, index) => {
-            pagesContainer.innerHTML += `<div class="page results-grid ${
-              index === 0 ? "current" : ""
-            }"></div>`;
+        groups.forEach((group, index) => {
+          pagesContainer.innerHTML += `<div class="page results-grid ${
+            index === 0 ? "current" : ""
+          }"></div>`;
 
-            let curPage = pagesContainer.children[index];
-            group.forEach((item) => {
-              curPage.innerHTML += renderShow(item);
-            });
+          let curPage = pagesContainer.children[index];
+          group.forEach((item) => {
+            curPage.innerHTML += renderShow(item);
           });
         });
-      }
-    );
+      });
+    });
   };
 
   document.querySelectorAll(".pagination-component").forEach((component) => {
     new Pagination(component);
   });
 
-  renderTrendingMovies();
-  renderTrendingShows();
+  renderTrendingMovies("today");
+  renderTrendingShows("today");
+
+  // trending movies timeline
+  const trendingMoviesSelect = document.querySelector(
+    "#trending-movies-timeline"
+  );
+
+  trendingMoviesSelect.addEventListener("change", () => {
+    renderTrendingMovies(trendingMoviesSelect.value);
+  });
+
+  // trending shows timeline
+  const trendingShowsSelect = document.querySelector(
+    "#trending-shows-timeline"
+  );
+
+  trendingShowsSelect.addEventListener("change", () => {
+    renderTrendingShows(trendingShowsSelect.value);
+  });
 
   // searching
   const searchBar = document.querySelector("#search-bar");
