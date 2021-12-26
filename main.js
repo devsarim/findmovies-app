@@ -169,6 +169,7 @@ window.addEventListener("load", () => {
     }
   }
 
+  const cache = {};
   const GENRES = [
     { id: 28, name: "Action" },
     { id: 12, name: "Adventure" },
@@ -191,6 +192,29 @@ window.addEventListener("load", () => {
     { id: 37, name: "Western" },
   ];
 
+  function getGenres(ids) {
+    let genres = [];
+
+    ids.forEach((id) => {
+      let genre = "";
+
+      GENRES.forEach((obj) => {
+        if (obj.id == id) {
+          genre = obj.name;
+        }
+      });
+
+      if (genre !== "") {
+        genres.push({
+          name: genre,
+          href: `https://www.themoviedb.org/genre/${id}/`,
+        });
+      }
+    });
+
+    return genres;
+  }
+
   function sliceIntoChunks(arr, chunkSize) {
     const res = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
@@ -203,6 +227,38 @@ window.addEventListener("load", () => {
   const searchResultsSection = document.querySelector(
     "#search-results-section"
   );
+
+  const renderMovie = (data) => {
+    cache[data.id] = data;
+
+    return `<div class="result-card" cache-id="${data.id}">
+    <img class="result-poster" src="https://image.tmdb.org/t/p/original${
+      data.poster_path
+    }" alt="Movie Poster" />
+    <h4 class="result-title text-white">
+    ${data.title}&nbsp;<span class="text-primary text-underline">${
+      data.release_date.split("-")[0]
+    }</span>
+    </h4>
+    </div>
+    `;
+  };
+
+  const renderShow = (data) => {
+    cache[data.id] = data;
+
+    return `<div class="result-card" cache-id="${data.id}">
+    <img class="result-poster" src="https://image.tmdb.org/t/p/original${
+      data.poster_path
+    }" alt="Movie Poster" />
+    <h4 class="result-title text-white">
+    ${data.name}&nbsp;<span class="text-primary text-underline">${
+      data.first_air_date.split("-")[0]
+    }</span>
+    </h4>
+    </div>
+    `;
+  };
 
   const searchMovies = (query) => {
     if (query === "") {
@@ -229,18 +285,7 @@ window.addEventListener("load", () => {
 
             let curPage = pagesContainer.children[index];
             group.forEach((item) => {
-              curPage.innerHTML += `
-            <div class="result-card">
-            <img class="result-poster" src="https://image.tmdb.org/t/p/original${
-              item.poster_path
-            }" alt="Movie Poster" />
-            <h4 class="result-title text-white">
-            ${item.title}&nbsp;<span class="text-primary text-underline">${
-                item.first_air_date.split("-")[0]
-              }</span>
-            </h4>
-            </div>
-            `;
+              curPage.innerHTML += renderMovie(item);
             });
           });
         });
@@ -264,27 +309,13 @@ window.addEventListener("load", () => {
           let groups = sliceIntoChunks(data.results, 4);
 
           groups.forEach((group, index) => {
-            pagesContainer.innerHTML += `
-            <div class="page results-grid ${index === 0 ? "current" : ""}">
-  
-            </div>
-  
-          `;
+            pagesContainer.innerHTML += `<div class="page results-grid ${
+              index === 0 ? "current" : ""
+            }"></div>`;
 
             let curPage = pagesContainer.children[index];
             group.forEach((item) => {
-              curPage.innerHTML += `
-            <div class="result-card">
-            <img class="result-poster" src="https://image.tmdb.org/t/p/original${
-              item.poster_path
-            }" alt="Movie Poster" />
-            <h4 class="result-title text-white">
-            ${item.name}&nbsp;<span class="text-primary text-underline">${
-                item.first_air_date.split("-")[0]
-              }</span>
-            </h4>
-            </div>
-            `;
+              curPage.innerHTML += renderShow(item);
             });
           });
         });
@@ -302,26 +333,13 @@ window.addEventListener("load", () => {
           let groups = sliceIntoChunks(data.results, 4);
 
           groups.forEach((group, index) => {
-            pagesContainer.innerHTML += `
-            <div class="page results-grid ${index === 0 ? "current" : ""}">
-  
-            </div>
-  
-          `;
+            pagesContainer.innerHTML += `<div class="page results-grid ${
+              index === 0 ? "current" : ""
+            }"></div>`;
 
             let curPage = pagesContainer.children[index];
             group.forEach((item) => {
-              curPage.innerHTML += `
-            <div class="result-card">
-            <img class="result-poster" src="https://image.tmdb.org/t/p/original${
-              item.poster_path
-            }" alt="Movie Poster" />
-            <h4 class="result-title text-white">
-            ${item.title}&nbsp;<span class="text-primary text-underline">${
-                item.release_date.split("-")[0]
-              }</span>
-            </h4>
-            `;
+              curPage.innerHTML += renderMovie(item);
             });
           });
         });
@@ -339,27 +357,13 @@ window.addEventListener("load", () => {
           let groups = sliceIntoChunks(data.results, 4);
 
           groups.forEach((group, index) => {
-            pagesContainer.innerHTML += `
-            <div class="page results-grid ${index === 0 ? "current" : ""}">
-  
-            </div>
-  
-          `;
+            pagesContainer.innerHTML += `<div class="page results-grid ${
+              index === 0 ? "current" : ""
+            }"></div>`;
 
             let curPage = pagesContainer.children[index];
             group.forEach((item) => {
-              curPage.innerHTML += `
-            <div class="result-card">
-            <img class="result-poster" src="https://image.tmdb.org/t/p/original${
-              item.poster_path
-            }" alt="Movie Poster" />
-            <h4 class="result-title text-white">
-            ${item.name}&nbsp;<span class="text-primary text-underline">${
-                item.first_air_date.split("-")[0]
-              }</span>
-            </h4>
-            </div>
-            `;
+              curPage.innerHTML += renderShow(item);
             });
           });
         });
@@ -386,6 +390,50 @@ window.addEventListener("load", () => {
       searchShows(query.substring(3));
     } else {
       searchMovies(query);
+    }
+  });
+
+  // popout
+  const popoutContainer = document.querySelector(".result-popout-container");
+
+  document.addEventListener("click", (e) => {
+    let target = e.target;
+    if (target.classList.contains("result-poster")) {
+      popoutContainer
+        .querySelector(".result-poster")
+        .setAttribute("src", target.getAttribute("src"));
+
+      let data = cache[target.parentElement.getAttribute("cache-id")];
+      console.log(data);
+
+      popoutContainer.querySelector(".result-title").innerHTML = `${
+        data.title || data.name
+      }&nbsp;<span class="text-dark">${
+        data.first_air_date
+          ? data.first_air_date.split("-")[0]
+          : data.release_date.split("-")[0]
+      }</span>`;
+
+      popoutContainer.querySelector(".result-rating").outerHTML = `
+      <p class="result-rating text-dark" title="${data.vote_count} votes">${data.vote_average}/10&nbsp;<i class="fas fa-star text-yellow"></i></p>
+      `;
+
+      popoutContainer.querySelector(".result-overview").textContent =
+        data.overview;
+
+      let genres = getGenres(data.genre_ids);
+      let genresUl = popoutContainer.querySelector(".genres");
+      genresUl.innerHTML = "";
+
+      genres.forEach((genre) => {
+        genresUl.innerHTML += `
+        <li><a href="${genre.href}" class="genre">${genre.name}</a></li>
+        `;
+      });
+
+      popoutContainer.classList.remove("hidden");
+    } else if (target.classList.contains("overlay")) {
+      popoutContainer.classList.add("hidden");
     }
   });
 });
