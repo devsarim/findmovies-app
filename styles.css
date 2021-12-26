@@ -59,6 +59,15 @@ body {
 .container {
   width: 80%;
   margin: 0 auto;
+  padding: 1em 0;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 img {
@@ -74,13 +83,17 @@ a {
 }
 
 select {
-  padding: 0 1em;
+  padding: 0.5em 1em;
   background-color: white;
   border: none;
   border-radius: 0.25rem;
 }
 
-/* pagination */
+/* 
+  ==========
+  Pagination
+  ==========
+*/
 .pagination-component {
   display: grid;
   gap: 1em;
@@ -116,7 +129,11 @@ select {
   border-radius: 0.25rem;
 }
 
-/* header */
+/* 
+  ======
+  Header
+  ======
+*/
 header {
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 1);
 }
@@ -125,7 +142,6 @@ header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1em 0;
   gap: 1em;
 }
 
@@ -155,7 +171,7 @@ header .container {
   font-size: 3rem;
 }
 
-@media (max-width: 932px) {
+@media (max-width: 768px) {
   header .container {
     flex-direction: column;
     align-items: stretch;
@@ -170,14 +186,14 @@ header .container {
   }
 }
 
-/* main */
+/* 
+  ====
+  Main
+  ====
+*/
 main {
   overflow: hidden;
   min-height: 100vh;
-}
-
-main .container {
-  padding: 1em 0;
 }
 
 .subheading {
@@ -189,13 +205,22 @@ main .container {
   justify-content: space-between;
 }
 
-/* results */
+@media (max-width: 576px) {
+  .subheading {
+    flex-direction: column;
+    gap: 0.25em;
+  }
+}
+
+/* 
+  =======
+  Results
+  =======
+*/
 .results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1em;
-
-  justify-content: end;
 }
 
 .result-poster {
@@ -203,6 +228,7 @@ main .container {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
+/* to prevent hidden pages from blocking pagination control buttons */
 .page .result-poster {
   pointer-events: none;
 }
@@ -210,12 +236,17 @@ main .container {
 .page.current .result-poster {
   pointer-events: all;
 }
+/* to prevent hidden pages from blocking pagination control buttons */
 
 .result-title {
   font-weight: lighter;
 }
 
-/* popout */
+/* 
+  ======
+  Popout
+  ======
+*/
 .result-popout-container {
   position: fixed;
   width: 100%;
@@ -228,34 +259,25 @@ main .container {
   transition: transform 150ms ease-in-out;
 }
 
-.overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
 .result-popout {
   z-index: 2;
   width: 50%;
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); */
   grid-template-columns: auto 1fr;
   padding: 1em;
   border-radius: 0.25rem;
   gap: 1em;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .result-popout {
     width: 90%;
   }
 }
 
-@media (max-width: 592px) {
+@media (max-width: 576px) {
   .result-popout .result-overview {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -268,14 +290,6 @@ main .container {
   flex-direction: column;
 }
 
-@media (max-width: 1100px) {
-  .result-popout {
-    grid-template-columns: 1fr;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
 .result-overview {
   margin: 0.8em 0;
 }
@@ -285,10 +299,6 @@ main .container {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25em;
-}
-
-#results-container > * + * {
-  margin-top: 2em;
 }
 
 #search-results-section {
