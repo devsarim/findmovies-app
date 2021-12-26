@@ -1,4 +1,4 @@
-# findmovies-app
+# [findmovies-app](https://sarim-findmovies.netlify.app/)
 A simple, elegant website where you can take a deep look at the latest movies and TV shows.
 
 - Consumes data from [TMDB](https://www.themoviedb.org/)
