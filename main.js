@@ -260,6 +260,15 @@ window.addEventListener("load", () => {
     `;
   };
 
+  function showLoading(id) {
+    document.querySelector(id).classList.remove("hidden-loading-circle");
+  }
+
+  function hideLoading(id) {
+    console.log("hiding");
+    document.querySelector(id).classList.add("hidden-loading-circle");
+  }
+
   const searchMovies = (query) => {
     if (query === "") {
       searchResultsSection.style.display = "none";
@@ -278,10 +287,10 @@ window.addEventListener("load", () => {
           groups.forEach((group, index) => {
             pagesContainer.innerHTML += `
             <div class="page results-grid ${index === 0 ? "current" : ""}">
-  
+            
             </div>
-  
-          `;
+            
+            `;
 
             let curPage = pagesContainer.children[index];
             group.forEach((item) => {
@@ -289,6 +298,8 @@ window.addEventListener("load", () => {
             });
           });
         });
+
+        hideLoading("#search-loading");
       }
     );
   };
@@ -319,6 +330,8 @@ window.addEventListener("load", () => {
             });
           });
         });
+
+        hideLoading("#search-loading");
       }
     );
   };
@@ -343,6 +356,8 @@ window.addEventListener("load", () => {
             curPage.innerHTML += renderMovie(item);
           });
         });
+
+        hideLoading("#trending-movies-loading");
       });
     });
   };
@@ -367,6 +382,8 @@ window.addEventListener("load", () => {
             curPage.innerHTML += renderShow(item);
           });
         });
+
+        hideLoading("#trending-shows-loading");
       });
     });
   };
@@ -375,6 +392,8 @@ window.addEventListener("load", () => {
     new Pagination(component);
   });
 
+  showLoading("#trending-movies-loading");
+  showLoading("#trending-shows-loading");
   renderTrendingMovies("today");
   renderTrendingShows("today");
 
@@ -404,6 +423,7 @@ window.addEventListener("load", () => {
 
     let query = searchBar.value;
 
+    showLoading("#search-loading");
     if (query.substring(0, 2) === "/s") {
       searchShows(query.substring(3));
     } else {

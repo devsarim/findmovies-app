@@ -130,6 +130,34 @@ select {
 }
 
 /* 
+  ==============
+  Loading Circle
+  ==============
+*/
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: spinner 1s infinite ease-in-out;
+  font-size: 2rem;
+  margin: 1em 0;
+}
+
+.hidden-loading-circle {
+  display: none;
+}
+
+/* 
   ======
   Header
   ======
@@ -303,4 +331,11 @@ main {
 
 #search-results-section {
   display: none;
+}
+
+@media (max-width: 507px) {
+  .result-popout {
+    width: auto;
+    grid-template-columns: 250px;
+  }
 }
